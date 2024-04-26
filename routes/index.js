@@ -20,8 +20,7 @@ router.use((req, res, next) => {
 
 /* GET home page. */
 router.get('/', logStuff, (req, res, next) => {
-    res.redirect("/catalog");
-    // next();
+    res.redirect('/catalog');
 });
 
 export default router;
