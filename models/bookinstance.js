@@ -1,4 +1,5 @@
-import mongoose, { mongo } from 'mongoose';
+import mongoose from 'mongoose';
+import { DateTime } from 'luxon';
 
 const Schema = mongoose.Schema;
 
@@ -19,6 +20,21 @@ const BookInstanceSchema = new Schema({
 BookInstanceSchema.virtual('url').get(function () {
     // We don't use an arrow function as we'll need the this object
     return `/catalog/bookinstance/${this._id}`;
+});
+
+// Virtual for borrowed books due date.
+BookInstanceSchema.virtual('due_back_formatted').get(function () {
+    // const options = {
+    //     weekday: 'short',
+    //     year: 'numeric',
+    //     month: 'short',
+    //     day: 'numeric',
+    // };
+
+    // Date formatter implementation
+    // return this.due_back.toLocaleDateString([], options).split(' ').slice(1).join(' ');
+
+    return DateTime.fromJSDate(this.due_back).toLocaleString(DateTime.DATE_MED);
 });
 
 export default mongoose.model('BookInstance', BookInstanceSchema);
