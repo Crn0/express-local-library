@@ -6,15 +6,7 @@ export const bookinstance_list = asyncHandler(async (req, res, next) => {
         .populate('book')
         .exec();
 
-    const options = {
-        weekday: 'short',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-    };
-
     res.render('bookinstance_list', {
-        options,
         title: 'Book Instance list',
         bookinstance_list: allBookInstances,
     });
