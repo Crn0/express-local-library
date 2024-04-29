@@ -41,7 +41,25 @@ export const book_list = asyncHandler(async (req, res, next) => {
 
 // Display detail page for a specific book.
 export const book_detail = asyncHandler(async (req, res, next) => {
-    res.send(`NOT IMPLEMENTED: Book detail: ${req.params.id}`);
+    // Get details of books, book instances for specific book
+    const { id } = req.params;
+    const [book, bookInstances] = await Promise.all([
+        Book.findById(id).populate('author').populate('genre').exec(),
+        BookInstance.find({book: id}).exec(),
+    ]);
+
+    if(book === null) {
+        // No results
+        const error = new Error('Book not found');
+        error.status = 404;
+        return next(error);
+    }
+
+    res.render('book_detail', {
+        title: book.title,
+        book: book,
+        book_instances: bookInstances,
+    })
 });
 
 // Display book create form on GET.
