@@ -30,7 +30,7 @@ AuthorSchema.virtual('url').get(function () {
 });
 
 // Virtual date formatter for author's birth date
-AuthorSchema.virtual('birth_date_formatted').get(function () {
+AuthorSchema.virtual('birth_date_formatted').get(function() {
     if (this.date_of_birth)
         return DateTime.fromJSDate(this.date_of_birth).toLocaleString(
             DateTime.DATE_MED
@@ -42,7 +42,7 @@ AuthorSchema.virtual('birth_date_formatted').get(function () {
 });
 
 // Virtual date formatter for author's death date
-AuthorSchema.virtual('death_date_formatted').get(function () {
+AuthorSchema.virtual('death_date_formatted').get(function() {
     if (this.date_of_death)
         return DateTime.fromJSDate(this.date_of_death).toLocaleString(
             DateTime.DATE_MED
@@ -52,5 +52,25 @@ AuthorSchema.virtual('death_date_formatted').get(function () {
     // if date of death exist return it else return string
     // return this.date_of_death ? DateTime.fromJSDate(this.date_of_death).toLocaleString(DateTime.DATE_MED) : '';
 });
+
+// Virtual date for birth and death of author
+AuthorSchema.virtual('lifespan').get(function() {
+    let birth = '';
+    let death = '';
+
+    if (this.date_of_birth) {
+        birth = DateTime.fromJSDate(this.date_of_birth).toLocaleString(
+            DateTime.DATE_MED
+        );
+    }
+        
+    if (this.date_of_death) {
+        death = DateTime.fromJSDate(this.date_of_death).toLocaleString(
+            DateTime.DATE_MED
+        );
+    }
+
+    return `${birth} - ${death}`;
+})
 
 export default mongoose.model('Author', AuthorSchema);
