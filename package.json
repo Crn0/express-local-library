@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
-    "server": "DEBUG=express-local-library-tutorial:* npm run dev",
+    "server": "DEBUG=express-local-library:* npm run dev",
     "test": "nodemon script.js",
     "format": "prettier --write ./**/*.{js,jsx}"
   },

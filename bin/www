@@ -8,7 +8,7 @@ import debugFunc from 'debug';
 import http from 'http';
 
 
-const debug = debugFunc('express-local-library-tutorial:server')
+const debug = debugFunc('express-local-library:server')
 /**
  * Get port from environment and store in Express.
  */
