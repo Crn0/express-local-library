@@ -15,9 +15,11 @@ export const bookinstance_list = asyncHandler(async (req, res, next) => {
 // Display detail page for a specific BookInstance.
 export const bookinstance_detail = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const bookInstance = await BookInstance.findById(id).populate('book').exec();
+    const bookInstance = await BookInstance.findById(id)
+        .populate('book')
+        .exec();
 
-    if(bookInstance === null) {
+    if (bookInstance === null) {
         // No results
         const error = new Error('Book copy not found');
         error.status = 404;

@@ -18,13 +18,13 @@ export const author_detail = asyncHandler(async (req, res, next) => {
     //  Get details of author and all their books (in parallel)
     const [author, allBooksByAuthor] = await Promise.all([
         Author.findById(id).exec(),
-        Book.find({author: id}, 'title summary').exec()
+        Book.find({ author: id }, 'title summary').exec(),
     ]);
 
-    if(author === null) {
+    if (author === null) {
         // No results
         const error = new Error('Author not found');
-        error.status = 404
+        error.status = 404;
         return next(error);
     }
 
@@ -32,7 +32,7 @@ export const author_detail = asyncHandler(async (req, res, next) => {
         author,
         title: 'Author Detail',
         author_books: allBooksByAuthor,
-    })
+    });
 });
 
 // Display Author create form on GET.

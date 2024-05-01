@@ -45,10 +45,10 @@ export const book_detail = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     const [book, bookInstances] = await Promise.all([
         Book.findById(id).populate('author').populate('genre').exec(),
-        BookInstance.find({book: id}).exec(),
+        BookInstance.find({ book: id }).exec(),
     ]);
 
-    if(book === null) {
+    if (book === null) {
         // No results
         const error = new Error('Book not found');
         error.status = 404;
@@ -59,7 +59,7 @@ export const book_detail = asyncHandler(async (req, res, next) => {
         title: book.title,
         book: book,
         book_instances: bookInstances,
-    })
+    });
 });
 
 // Display book create form on GET.
