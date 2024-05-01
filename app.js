@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import mongoose from 'mongoose';
 import createError from 'http-errors';
@@ -16,7 +17,8 @@ const app = express();
 // See: https://mongoosejs.com/docs/migrating_to_6.html#strictquery-is-removed-and-replaced-by-strict
 mongoose.set('strictQuery', false);
 // Define the database URL to connect to.
-const mongoDb = 'mongodb url';
+const mongoDb = process.env.MONGO_DB;
+
 // Wait for database to connect, logging an error if there is a problem
 const main = async () => await mongoose.connect(mongoDb);
 main().catch(console.error);
