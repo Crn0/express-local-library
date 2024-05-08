@@ -2,6 +2,7 @@ extends layout
 
 block content 
     h1= title 
+    p(style='font-size: 1.5rem; margin-bottom: .5rem;font-weight: 500;line-height: 1.2;') #{genre.name}
 
     div(style='margin-left:20px;margin-top:20px')
   
@@ -16,3 +17,8 @@ block content
         
         else 
             p This genre has no books.
+    hr
+    p 
+        a(href=`${genre.url}/delete`) Delete genre
+    p 
+        a(href=`${genre.url}/update`) Update genre
