@@ -1,9 +1,11 @@
 import asyncHandler from 'express-async-handler';
 import { body, validationResult } from 'express-validator';
+import debugFunc from 'debug';
 import Author from '../models/author.js';
 import Book from '../models/book.js';
 import isFirstLetterUpperCaseAndAfterSpace from '../helpers/isUppercase.js';
 // import formatName from '../helpers/toUpperCase.js';
+const debug = debugFunc('author');
 
 // Display list of all Authors.
 export const author_list = asyncHandler(async (req, res, next) => {
@@ -163,10 +165,11 @@ export const author_delete_post = asyncHandler(async (req, res, next) => {
 export const author_update_get = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     //  Get details of author and all their books (in parallel)
-    const author = await Author.findById(id).exec()
+    const author = await Author.findById(id).exec();
 
     if (author === null) {
         // No results
+        debug(`id not found on update: ${id}`);
         const error = new Error('Author not found');
         error.status = 404;
         return next(error);
@@ -247,4 +250,4 @@ export const author_update_post = [
             res.redirect(updatedAuthor.url);
         }
     }),
-]
+];

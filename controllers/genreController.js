@@ -143,7 +143,7 @@ export const genre_update_get = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     const genre = await Genre.findById(id).exec();
 
-    if(genre === null) {
+    if (genre === null) {
         // No results
         const error = new Error('Genre not found');
         error.status = 404;
@@ -152,14 +152,14 @@ export const genre_update_get = asyncHandler(async (req, res, next) => {
 
     res.render('genre_form', {
         genre,
-        title: 'Update Genre'
+        title: 'Update Genre',
     });
 });
 
 // Handle Genre update on POST.
 export const genre_update_post = [
-        // Validate and sanitize the name field.
-        body('name')
+    // Validate and sanitize the name field.
+    body('name')
         .trim()
         .isLength({ min: 3 })
         .withMessage('Genre name must at least 3 characters')
@@ -168,7 +168,7 @@ export const genre_update_post = [
             'The first character of a genre name must be capitalized, as well as the first character after a space or special character'
         )
         .escape(),
-        // Process request after validation and sanitization.
+    // Process request after validation and sanitization.
     asyncHandler(async (req, res, next) => {
         const { id } = req.params;
         // Extract the validation errors from a request.
@@ -188,13 +188,9 @@ export const genre_update_post = [
 
             return;
         } else {
-            // Data from form is valid. Update the record.       
-            const updatedGenre = await Genre.findByIdAndUpdate(
-                id,
-                genre,
-                {}
-            );    
-            
+            // Data from form is valid. Update the record.
+            const updatedGenre = await Genre.findByIdAndUpdate(id, genre, {});
+
             res.redirect(updatedGenre.url);
         }
     }),
